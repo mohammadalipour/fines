@@ -9,5 +9,5 @@ type Employee struct {
 
 type EmployeeRepository interface {
 	FindById(id int) (*Employee, error)
-	Save(user *Employee) error
+	Save(employee *Employee) error
 }

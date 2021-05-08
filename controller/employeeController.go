@@ -8,17 +8,17 @@ import (
 	"test/model"
 )
 
-type BaseHandler struct {
+type EmployeeBaseHandler struct {
 	employeeRepository model.EmployeeRepository
 }
 
-func NewBaseHandler(repository model.EmployeeRepository)*BaseHandler  {
-	return &BaseHandler{
+func NewEmployeeBaseHandler(repository model.EmployeeRepository)*EmployeeBaseHandler {
+	return &EmployeeBaseHandler{
 		employeeRepository: repository,
 	}
 }
 
-func (baseHandler *BaseHandler) Get(w http.ResponseWriter, r *http.Request)  {
+func (baseHandler *EmployeeBaseHandler) Get(w http.ResponseWriter, r *http.Request)  {
 	 Id, err := strconv.Atoi(r.FormValue("id"))
 
 	employee, err := baseHandler.employeeRepository.FindById(Id)
