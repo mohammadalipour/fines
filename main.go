@@ -10,8 +10,8 @@ import (
 )
 
 func getEmployee(w http.ResponseWriter, r *http.Request) {
-	dbConnection :=db.Connect()
 
+	dbConnection :=db.Connect()
 	employeeRepository := mysql.NewEmployeeRepository(dbConnection)
 	employeeController :=controller.NewBaseHandler(employeeRepository)
 	
@@ -20,7 +20,7 @@ func getEmployee(w http.ResponseWriter, r *http.Request) {
 
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", getEmployee).Methods("GET")
+	myRouter.HandleFunc("/employee", getEmployee).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8002", myRouter))
 }

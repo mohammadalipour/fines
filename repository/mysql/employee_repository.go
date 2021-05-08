@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"database/sql"
-	//"log"
+	"fmt"
 	"test/model"
 )
 
@@ -19,12 +19,19 @@ func NewEmployeeRepository(db *sql.DB) *EmployeeRepository {
 func (r *EmployeeRepository) FindById(id int) (*model.Employee, error) {
 
 	var employee model.Employee
-	r.DB.QueryRow("SELECT name,family,level FROM employee where id = ?", id).Scan(&employee.Name, &employee.Family, &employee.Level)
+	r.DB.QueryRow("SELECT e.name,e.family,l.title level,(ehw.hours_worked * l.salary) salary"+
+		" FROM employees e "+
+		" INNER JOIN levels l ON l.id=e.level_id "+
+		" INNER JOIN employee_hours_worked ehw on e.id = ehw.employee_id"+
+		" where e.id = ?", id).Scan(&employee.Name, &employee.Family, &employee.Level,&employee.Salary)
+	defer r.DB.Close()
 
+	fmt.Println(employee)
 	return &model.Employee{
-		Name: employee.Name,
+		Name:   employee.Name,
 		Family: employee.Family,
-		Level: employee.Level,
+		Level:  employee.Level,
+		Salary: employee.Salary,
 	}, nil
 }
 

@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -26,5 +27,7 @@ func (baseHandler *BaseHandler) Get(w http.ResponseWriter, r *http.Request)  {
 		fmt.Println("Error", employee)
 	}
 
-	fmt.Println("result: ",employee)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(employee)
 }

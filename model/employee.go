@@ -4,6 +4,7 @@ type Employee struct {
 	Name   string
 	Family string
 	Level  string
+	Salary int
 }
 
 type EmployeeRepository interface {
